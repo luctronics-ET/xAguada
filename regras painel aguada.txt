@@ -1,0 +1,57 @@
+estrutura do painel: Titulo da pagina, cards, grafico, tabela. 
+
+Titulo da pagina: "CMASM Aguada"
+subtitulo: " - Informações sobre recursos hidricos do dia DD MM AAAA -" (dia DD, mes MM, ano AAAA)
+
+um card para cada sensor arduino:
+
+card header: nomes de cada sensor: Res. Consumo, Res. Incêndio, Cisterna IE01, Cisterna IE02, Res. Bombas IE03,  Cisterna IF01, Cisterna IF02.
+cards devem ter o mesmo tamanho e formatação.
+linha1
+
+ "Nano_02" => "Res. Consumo"
+
+ "Nano_03" => "Cisterna IE01"
+
+ "Nano_04" => "Cisterna IE02"
+
+ "Nano_01" => "Res. Incêndio"
+linha2
+
+ "Nano_05" => "Res. Bombas IE03"
+
+ "Nano_05" => "Cisterna IF01"
+
+ "Nano_05" => "Cisterna IF02"
+
+cards body:
+cada card exibirá: 
+linha 1: Volume: último volume em toneladas (m³ ≈ ton, 1 casa decimal). e  Capacidade: percentual do volume. (fonte grande, negrito)
+linha 2: consumo, abastecimento, fonte normal
+
+card footer: 
+datahora  fonte pequena
+
+
+"volume" é o volume em toneladas (1 casa decimal), "capacidade" percentual do volume. 
+o "consumo" deve ser calculado pela soma das diferencas das leituras de volume do dia. (dia começando as 00:00h ate as 23:59h) 
+Consumo: soma das quedas (volume anterior > atual) do dia.
+Abastecimento: soma dos aumentos (volume anterior < atual) do dia.
+Cores dinâmicas (verde/amarelo/vermelho) dependendo da capacidade. 
+Caso a capacidade for maior que 60%, card (background) fica verde, 
+capacidade entre 60 e 40% o card fica amarelo, 
+capacidade menor que 40% o card fica vermelho. 
+
+
+Data/Hora: da última leitura no formato DDHHMM (exemplo: 301745 → dia 30, 17:45h).
+
+
+gráfico interno (sem bibliotecas externas).
+gráfico de barra vertical para volume e percentual
+linha de tendência (média móvel) no gráfico para visualizar consumo/abastecimento de forma mais suave?
+
+Depois vem a tabela com as últimas 20 leituras.
+
+tabela - volume e capacidade final no quarto, consumo e abastecimento diario parcial
+cada quarto( 00-04h, 04h-08h, 08h-12h, 12h-16h, 16-20h, 20-24h)
+consumo e abastecimento diario total 
