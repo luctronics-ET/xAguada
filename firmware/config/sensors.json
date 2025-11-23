@@ -1,0 +1,280 @@
+{
+  "sensors": [
+    {
+      "sensor_id": "SEN_CON_01",
+      "mac_address": "20:6e:f1:6b:77:58",
+      "sensor_type": "TYPE_SINGLE_ULTRA",
+      "ativo_id": "RCON",
+      "tipo": "ultrassonico",
+      "modelo": "AJ-SR04M",
+      "variavel": "nivel_cm",
+      "unidade": "cm",
+      "precisao_cm": 0.5,
+      "range_min_cm": 20,
+      "range_max_cm": 450,
+      "gpio_trig": 1,
+      "gpio_echo": 0,
+      "frequencia_leitura_sec": 10,
+      "ultima_calibracao": "2025-10-01T10:00:00-03:00",
+      "ajuste_offset_cm": 0,
+      "status": "ativo",
+      "coordenadas": {
+        "x": 150.3,
+        "y": 290.7,
+        "z": 4.5
+      },
+      "valvulas": {
+        "valve_in": { "gpio": 8, "estado_inicial": "FECHADA" },
+        "valve_out": { "gpio": 9, "estado_inicial": "FECHADA" }
+      },
+      "detectores": {
+        "sound_in": { 
+          "gpio": 5, 
+          "tipo": "digital", 
+          "descricao": "Detector de som para água entrando (abastecimento)",
+          "funcionamento": "Detecta ruído de água caindo/entrando no reservatório"
+        }
+      },
+      "telemetria": {
+        "formato": "individual",
+        "fields": ["mac", "type", "value", "battery", "uptime", "rssi"],
+        "datetime": "servidor",
+        "value_encoding": "int (distance_cm multiplicado por 100)",
+        "battery_unit": "mV",
+        "tipos_enviados": [
+          "distance_cm",
+          "sound_in",
+          "valve_in",
+          "valve_out"
+        ]
+      }
+    },
+    {
+      "sensor_id": "SEN_CAV_01",
+      "mac_address": "dc:06:75:67:6a:cc",
+      "sensor_type": "TYPE_SINGLE_ULTRA",
+      "ativo_id": "RCAV",
+      "tipo": "ultrassonico",
+      "modelo": "AJ-SR04M",
+      "variavel": "nivel_cm",
+      "unidade": "cm",
+      "precisao_cm": 0.5,
+      "range_min_cm": 20,
+      "range_max_cm": 450,
+      "gpio_trig": 1,
+      "gpio_echo": 0,
+      "frequencia_leitura_sec": 10,
+      "ultima_calibracao": "2025-10-01T10:00:00-03:00",
+      "ajuste_offset_cm": 0,
+      "status": "ativo",
+      "valvulas": {
+        "valve_in": { "gpio": 8, "estado_inicial": "FECHADA" },
+        "valve_out": { "gpio": 9, "estado_inicial": "FECHADA" }
+      },
+      "detectores": {
+        "sound_in": { 
+          "gpio": 5, 
+          "tipo": "digital", 
+          "descricao": "Detector de som para água entrando (abastecimento)",
+          "funcionamento": "Detecta ruído de água caindo/entrando no reservatório"
+        }
+      },
+      "telemetria": {
+        "formato": "individual",
+        "fields": ["mac", "type", "value", "battery", "uptime", "rssi"],
+        "datetime": "servidor",
+        "value_encoding": "int (distance_cm multiplicado por 100)",
+        "battery_unit": "mV",
+        "tipos_enviados": [
+          "distance_cm",
+          "sound_in",
+          "valve_in",
+          "valve_out"
+        ]
+      }
+    },
+    {
+      "sensor_id": "SEN_B03_01",
+      "mac_address": null,
+      "sensor_type": "TYPE_SINGLE_ULTRA",
+      "ativo_id": "RB03",
+      "tipo": "ultrassonico",
+      "modelo": "AJ-SR04M",
+      "variavel": "nivel_cm",
+      "unidade": "cm",
+      "precisao_cm": 0.5,
+      "range_min_cm": 20,
+      "range_max_cm": 450,
+      "gpio_trig": 1,
+      "gpio_echo": 0,
+      "frequencia_leitura_sec": 10,
+      "ultima_calibracao": null,
+      "ajuste_offset_cm": 0,
+      "status": "pendente",
+      "local": "CB03 - Casa de Bombas N03",
+      "valvulas": {
+        "valve_in": { "gpio": 8, "estado_inicial": "FECHADA" },
+        "valve_out": { "gpio": 9, "estado_inicial": "FECHADA" }
+      },
+      "detectores": {
+        "sound_in": { 
+          "gpio": 5, 
+          "tipo": "digital", 
+          "descricao": "Detector de som para água entrando (abastecimento)",
+          "funcionamento": "Detecta ruído de água caindo/entrando no reservatório"
+        }
+      },
+      "telemetria": {
+        "formato": "individual",
+        "fields": ["mac", "type", "value", "battery", "uptime", "rssi"],
+        "datetime": "servidor",
+        "value_encoding": "int (distance_cm multiplicado por 100)",
+        "battery_unit": "mV",
+        "tipos_enviados": [
+          "distance_cm",
+          "sound_in",
+          "valve_in",
+          "valve_out"
+        ]
+      },
+      "nota": "Bombas B03E/B03D são elementos independentes (não controlados por ESP32)"
+    },
+    {
+      "sensor_id": "SEN_IE_DUAL",
+      "mac_address": null,
+      "sensor_type": "TYPE_DUAL_ULTRA",
+      "ativo_id": ["IE01", "IE02"],
+      "tipo": "ultrassonico_dual",
+      "modelo": "2x AJ-SR04M",
+      "variavel": ["IE01_distance_cm", "IE02_distance_cm"],
+      "unidade": "cm",
+      "precisao_cm": 0.5,
+      "range_min_cm": 20,
+      "range_max_cm": 450,
+      "frequencia_leitura_sec": 30,
+      "ultima_calibracao": null,
+      "status": "pendente",
+      "local": "Subsolo - Cisternas IE",
+      "hardware": {
+        "IE01": {
+          "gpio_trig": 0,
+          "gpio_echo": 1,
+          "gpio_sound": 5,
+          "gpio_valve_in": 7,
+          "gpio_valve_out": 8
+        },
+        "IE02": {
+          "gpio_trig": 2,
+          "gpio_echo": 3,
+          "gpio_sound": 6,
+          "gpio_valve_in": 9,
+          "gpio_valve_out": 10
+        },
+        "led_status": 8
+      },
+      "valvulas": {
+        "IE01_valve_in": { "gpio": 7, "estado_inicial": "FECHADA" },
+        "IE01_valve_out": { "gpio": 8, "estado_inicial": "FECHADA" },
+        "IE02_valve_in": { "gpio": 9, "estado_inicial": "FECHADA" },
+        "IE02_valve_out": { "gpio": 10, "estado_inicial": "FECHADA" }
+      },
+      "detectores": {
+        "IE01_sound_in": { 
+          "gpio": 5, 
+          "tipo": "digital", 
+          "descricao": "Detector de som IE01",
+          "funcionamento": "Detecta água entrando na cisterna IE01"
+        },
+        "IE02_sound_in": { 
+          "gpio": 6, 
+          "tipo": "digital", 
+          "descricao": "Detector de som IE02",
+          "funcionamento": "Detecta água entrando na cisterna IE02"
+        }
+      },
+      "telemetria": {
+        "formato": "individual",
+        "fields": ["mac", "type", "value", "battery", "uptime", "rssi"],
+        "datetime": "servidor",
+        "value_encoding": "int (distance_cm multiplicado por 100)",
+        "battery_unit": "mV",
+        "tipos_enviados": [
+          "IE01_distance_cm",
+          "IE02_distance_cm",
+          "IE01_sound_in",
+          "IE02_sound_in",
+          "IE01_valve_in",
+          "IE01_valve_out",
+          "IE02_valve_in",
+          "IE02_valve_out"
+        ]
+      },
+      "nota": "Um único ESP32-C3 monitora ambas as cisternas IE01 e IE02 simultaneamente"
+    }
+  ],
+  "calibration_procedure": {
+    "descricao": "Procedimento padrão de calibração de sensores ultrassônicos",
+    "passos": [
+      "1. Desligar bombas e aguardar estabilização (5 min)",
+      "2. Medir nível com régua física (precisão ±0.5cm)",
+      "3. Registrar valor de referência",
+      "4. Coletar 20 leituras do sensor (intervalo 2s)",
+      "5. Calcular mediana das leituras",
+      "6. Calcular offset: referencia - mediana",
+      "7. Aplicar offset na configuração do node",
+      "8. Registrar calibração no banco de dados",
+      "9. Validar com nova medição após 1 hora"
+    ],
+    "frequencia_recomendada": "trimestral",
+    "condicoes": "Sem bombeamento ativo, sem vento forte"
+  },
+  "node_mapping_backend": {
+    "description": "Mapeamento feito via tabela no backend, não hardcoded no firmware",
+    "table": "node_mapping",
+    "fields": ["mac_address", "sensor_type", "reservatorio_id", "sensor_id", "ativo"],
+    "nodes": [
+      {
+        "mac": "20:6e:f1:6b:77:58",
+        "sensor_type": "TYPE_SINGLE_ULTRA",
+        "name": "Node CON",
+        "location": "CON - Castelo de Consumo",
+        "reservatorios": ["RCON"],
+        "sensors": ["SEN_CON_01"],
+        "firmware_version": "1.0.1",
+        "status": "ativo"
+      },
+      {
+        "mac": "dc:06:75:67:6a:cc",
+        "sensor_type": "TYPE_SINGLE_ULTRA",
+        "name": "Node CAV",
+        "location": "CAV - Castelo de Incendio",
+        "reservatorios": ["RCAV"],
+        "sensors": ["SEN_CAV_01"],
+        "firmware_version": "1.0.1",
+        "status": "ativo"
+      },
+      {
+        "mac": null,
+        "sensor_type": "TYPE_SINGLE_ULTRA",
+        "name": "Node CB3",
+        "location": "CB3 - Casa de Bombas N03",
+        "reservatorios": ["CB3"],
+        "sensors": ["SEN_CB3_01"],
+        "firmware_version": "1.0.1",
+        "status": "pendente"
+      },
+      {
+        "mac": null,
+        "sensor_type": "TYPE_DUAL_ULTRA",
+        "name": "Node CIE",
+        "location": "CIE - Cisternas Ilha do Engenho",
+        "reservatorios": ["IE01", "IE02"],
+        "sensors": ["SEN_IE_DUAL"],
+        "firmware_version": "2.0.0",
+        "firmware": "node_sensor_20",
+        "status": "pendente",
+        "nota": "Um único ESP32-C3 com 2 sensores ultrassônicos monitora ambas as cisternas"
+      }
+    ]
+  }
+}

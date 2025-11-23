@@ -2,7 +2,7 @@
 // painel.php - Painel simples de leituras
 require_once __DIR__ . '/config.php';
 
-// Basic HTTP auth
+/* Basic HTTP auth
 if (!isset($_SERVER['PHP_AUTH_USER'])) {
   header('WWW-Authenticate: Basic realm="Painel"');
   header('HTTP/1.0 401 Unauthorized');
@@ -11,7 +11,7 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
 if ($_SERVER['PHP_AUTH_USER'] !== ADMIN_USER || $_SERVER['PHP_AUTH_PW'] !== ADMIN_PASS) {
   header('HTTP/1.0 403 Forbidden'); echo 'Acesso negado.'; exit;
 }
-
+*/
 $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if ($mysqli->connect_errno) die('Erro DB: '.$mysqli->connect_error);
 $res = $mysqli->query("SELECT * FROM leituras ORDER BY id DESC LIMIT 50");

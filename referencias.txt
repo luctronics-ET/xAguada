@@ -13,8 +13,8 @@ titulo aba navegador: CMASM - Aguada
 sub paginas:
 
 pagina CMASM Aguada
-gráfico linha  do volume castelo consumo, eixos: 0- vol total / percentual, período de 24 h ate agora) e do consumo diário no mesmo gráfico   ocupar toda largura do contente desde side bar ate canto direito
-
+multi gráfico 
+ - linha do percentual/volume (grafico area) do castelo consumo, eixos: 0- vol total / percentual, período de 24 h ate agora) e do consumo diário no mesmo gráfico   ocupar toda largura do content.body desde sidebar ate canto direito
 data table resumo
 consumo diário T ícone tendencia
 volume atual do castelo consumo  % T
@@ -28,10 +28,11 @@ data table status reservatorios
 tabelas bombas 
 tabela válvulas (botões trigger com feed back) usuário pode alterar manualmente.
 
-tabela 
-cada quarto( 00-04h, 04h-08h, 08h-12h, 12h-16h, 16-20h, 20-24h)
-consumo diário T
-volume 
+tabela consumo diário m3/24h
+mediana de leituras de volume_m3 no inicio 5 min ou ate estabilizar variacao < 0,1) de cada Hora( 00:00, 01h,....23h(ate 23:59h))
+cada "Quarto" como subtotal do consumo e mediana de volume final do quarto (dentro do horario) ( 00-04h, 04h-08h, 08h-12h, 12h-16h, 16-20h, 20-24h)
+
+volume_m3 
 
 alertas ativos
 

@@ -78,11 +78,15 @@ $data_fmt = date('d/m/Y', strtotime($filtro_data));
 <meta charset="UTF-8">
 <title>CMASM Aguada</title>
 <style>
-body { font-family: Arial, sans-serif; margin: 20px; background:#f0f2f5; }
-h1 { color:#333; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f0f2f5; color: #333; }
+header { background: #fff; padding: 15px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+h1 { margin: 0; font-size: 24px; color: #2c3e50; }
+nav a { text-decoration: none; color: #555; margin-left: 20px; font-weight: 500; }
+nav a.active { color: #007bff; border-bottom: 2px solid #007bff; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 h2 { color:#444; margin-top:30px; }
-.subtitulo { color:#666; font-size:16px; margin-bottom:30px; }
-.cards { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 30px; }
+.subtitulo { color:#666; font-size:16px; margin-bottom:30px; text-align: center; }
+.cards { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 30px; justify-content: center; }
 .card { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); min-width: 220px; max-width: 220px; padding: 18px 16px; display: flex; flex-direction: column; align-items: center; }
 .card-header { font-weight: bold; font-size: 15px; margin-bottom: 8px; }
 .card-body { font-size: 22px; font-weight: bold; margin-bottom: 8px; }
@@ -91,16 +95,34 @@ h2 { color:#444; margin-top:30px; }
 .verde { background: #b6e7a0 !important; }
 .amarelo { background: #ffe680 !important; }
 .vermelho { background: #ffb3b3 !important; }
-canvas { border:1px solid #888; background:#fff; margin-top:20px; }
+canvas { border:1px solid #888; background:#fff; margin-top:20px; width: 100%; }
 table { border-collapse: collapse; width:100%; background:white; margin-top:20px; }
 th,td { border:1px solid #ccc; padding:6px 8px; text-align:center; font-size:13px; }
 th { background:#eee; }
+.filter-form { text-align: center; margin-bottom: 20px; }
+.filter-form input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+.filter-form button { padding: 8px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
 </style>
 </head>
 <body>
 
-<h1>CMASM Aguada</h1>
-<div class="subtitulo">- Informações sobre recursos hidricos do dia <?= $data_fmt ?> -</div>
+<header>
+    <h1>💧 CMASM Aguada</h1>
+    <nav>
+        <a href="dashboard.php">Monitoramento</a>
+        <a href="relatorio_consumo.php" class="active">Relatório Histórico</a>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="filter-form">
+        <form method="GET">
+            <label>Data: <input type="date" name="data" value="<?= $filtro_data ?>"></label>
+            <button type="submit">Filtrar</button>
+        </form>
+    </div>
+
+    <div class="subtitulo">Relatório Diário - <?= $data_fmt ?></div>
 
 <div class="cards">
 <?php foreach($nodes as $node): 
@@ -166,7 +188,15 @@ foreach($nodes as $node):
 const dados = <?php echo json_encode(array_values($registros)); ?>;
 const canvas = document.getElementById('grafico');
 const ctx = canvas.getContext('2d');
-const W = canvas.width, H = canvas.height;
+
+// Ajuste de resolução
+const dpr = window.devicePixelRatio || 1;
+const rect = canvas.getBoundingClientRect();
+canvas.width = rect.width * dpr;
+canvas.height = rect.height * dpr;
+ctx.scale(dpr, dpr);
+
+const W = rect.width, H = rect.height;
 ctx.clearRect(0,0,W,H);
 const margin = 50;
 const barW = 40;
@@ -207,6 +237,7 @@ ctx.fillStyle = '#4caf50'; ctx.fillRect(W-180,margin,20,12); ctx.fillStyle='#000
 ctx.fillStyle = '#2196f3'; ctx.fillRect(W-180,margin+20,20,12); ctx.fillStyle='#000'; ctx.fillText('Capacidade (%)',W-155,margin+32);
 </script>
 
+</div> <!-- End Container -->
 </body>
 </html>
 

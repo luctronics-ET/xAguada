@@ -16,27 +16,27 @@ $mysqli->query("CREATE TABLE IF NOT EXISTS resumo_diario (
     abastecimento DECIMAL(10,2) DEFAULT 0,
     volume_final DECIMAL(10,2),
     percentual_final DECIMAL(5,2),
+    volume_medio DECIMAL(10,2),
+    percentual_medio DECIMAL(5,2),
     atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     UNIQUE KEY (data, node)
 )");
 
 $data = json_decode(file_get_contents('php://input'), true);
 if($data){
-    // Validações básicas de tipos e ranges (evita dados corrompidos)
+    // Validações básicas
     $node = isset($data['node']) ? substr(trim($data['node']),0,16) : null;
-    $temp = isset($data['temp']) ? floatval($data['temp']) : null;
-    $hum = isset($data['hum']) ? floatval($data['hum']) : null;
     $dist = isset($data['dist']) ? floatval($data['dist']) : null;
     $volume = isset($data['volume']) ? floatval($data['volume']) : null;
     $percentual = isset($data['percentual']) ? floatval($data['percentual']) : null;
 
-    if (!$node || $temp===null || $hum===null || $dist===null || $volume===null || $percentual===null) {
+    if (!$node || $dist===null || $volume===null || $percentual===null) {
         http_response_code(400); echo json_encode(['status'=>'error','msg'=>'dados invalidos']); exit;
     }
 
-    // insere leitura
-    $stmt = $mysqli->prepare("INSERT INTO leituras(node,temp,hum,dist,volume,percentual) VALUES(?,?,?,?,?,?)");
-    $stmt->bind_param("sddddd",$node,$temp,$hum,$dist,$volume,$percentual);
+    // insere leitura (sem temp/hum)
+    $stmt = $mysqli->prepare("INSERT INTO leituras(node,dist,volume,percentual) VALUES(?,?,?,?)");
+    $stmt->bind_param("sddd",$node,$dist,$volume,$percentual);
     $stmt->execute();
     $stmt->close();
 
@@ -51,6 +51,7 @@ if($data){
 
     $consumo=0; $abastecimento=0; $ultimoVol=null; 
     $percentual_final=0; $volume_final=0;
+    $somaVol=0; $somaPerc=0; $count=0;
     while($row=$res->fetch_assoc()){
         if($ultimoVol!==null){
             $delta = $row['volume'] - $ultimoVol;
@@ -60,15 +61,21 @@ if($data){
         $ultimoVol = $row['volume'];
         $volume_final = $row['volume'];
         $percentual_final = $row['percentual'];
+        $somaVol += $row['volume'];
+        $somaPerc += $row['percentual'];
+        $count++;
     }
     $res->free(); $stmt->close();
+    
+    $volume_medio = $count>0 ? $somaVol/$count : 0;
+    $percentual_medio = $count>0 ? $somaPerc/$count : 0;
 
     $stmt2 = $mysqli->prepare(
-      "INSERT INTO resumo_diario (data,node,consumo,abastecimento,volume_final,percentual_final) VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE consumo=?, abastecimento=?, volume_final=?, percentual_final=?, atualizado_em=NOW()"
+      "INSERT INTO resumo_diario (data,node,consumo,abastecimento,volume_final,percentual_final,volume_medio,percentual_medio) VALUES (?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE consumo=?, abastecimento=?, volume_final=?, percentual_final=?, volume_medio=?, percentual_medio=?, atualizado_em=NOW()"
     );
-    $stmt2->bind_param("ssdddddddd", 
-        $dataHoje,$node,$consumo,$abastecimento,$volume_final,$percentual_final,
-        $consumo,$abastecimento,$volume_final,$percentual_final
+    $stmt2->bind_param("ssdddddddddddd", 
+        $dataHoje,$node,$consumo,$abastecimento,$volume_final,$percentual_final,$volume_medio,$percentual_medio,
+        $consumo,$abastecimento,$volume_final,$percentual_final,$volume_medio,$percentual_medio
     );
     $stmt2->execute();
     $stmt2->close();

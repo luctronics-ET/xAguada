@@ -48,13 +48,13 @@ function calcularConsumoAbastecimento($leiturasNode) {
 }
 
 $nomes = [
-  "Nano_02" => "Res. Consumo",
-  "Nano_03" => "Cisterna IE01",
-  "Nano_04" => "Cisterna IE02",
-  "Nano_01" => "Res. Incêndio",
-  "Nano_05A"=> "Res. Bombas IE03",
-  "Nano_05B"=> "Cisterna IF01",
-  "Nano_05C"=> "Cisterna IF02"
+ "Nano_01" => "Res. Incêndio",       // 80t fire combat system elevated reservoir  
+ "Nano_02" => "Res. Consumo",        // 80t consumption elevated reservoir
+ "Nano_03" => "Cisterna IE01",       // 250t cistern
+ "Nano_04" => "Cisterna IE02",       // 250t cistern
+ "Nano_05" => "Res. Bombas IE03",    // Pump aux reservoir
+ "Nano_06" => "Cisterna IF01",       // Cistern IF01
+ "Nano_07" => "Cisterna IF02"       // Cistern IF02
 ];
 
 $porNode = [];
